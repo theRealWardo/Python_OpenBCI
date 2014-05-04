@@ -16,6 +16,7 @@ class OpenBCIBoard(object):
     self.ser = serial.Serial(port, baud)
     self.dump_registry_data()
     self.streaming = False
+    self.filter_data = False
 
   def dump_registry_data(self):
     """Dump all the debug data until we get to a line with something
@@ -37,6 +38,11 @@ class OpenBCIBoard(object):
       # Send an 'x' to the board to tell it to start streaming us text.
       self.ser.write('x')
       # Dump the first line that says "Arduino: Starting..."
+      self.ser.readline()
+    if self.filter_data:
+      print 'Enabling filter'
+      self.ser.write('f')
+      self.ser.readline()
       self.ser.readline()
     while True:
       data = self.ser.readline()

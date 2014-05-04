@@ -21,6 +21,10 @@ parser.add_argument(
     action='store_true',
     help='Send JSON data rather than pickled Python objects.')
 parser.add_argument(
+    '--filter_data',
+    action='store_true',
+    help='Enable onboard filtering.')
+parser.add_argument(
     '--host',
     help='The host to listen on.',
     default='127.0.0.1')
@@ -62,5 +66,7 @@ class UDPServer(object):
 
 args = parser.parse_args()
 obci = open_bci.OpenBCIBoard(args.serial, int(args.baud))
+if args.filter_data:
+  obci.filter_data = True
 sock_server = UDPServer(args.host, int(args.port), args.json)
 obci.start_streaming(sock_server.handle_sample)
