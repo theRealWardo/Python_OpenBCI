@@ -1,21 +1,8 @@
-from ws4py.client.threadedclient import WebSocketClient
+from socketIO_client import SocketIO
 
-class DummyClient(WebSocketClient):
+def on_sample(*args):
+    print args
 
-  def closed(self, code, reason=None):
-    print "Closed down", code, reason
-
-  def received_message(self, m):
-    print m
-    if len(m) == 175:
-      self.close(reason='Bye bye')
-
-if __name__ == '__main__':
-  try:
-    ws = DummyClient(
-        'ws://localhost:8880/socket.io/1/websocket/k_HTzF4ybAnZE9DX_SYy',
-        protocols=['http-only', 'chat'])
-    ws.connect()
-    ws.run_forever()
-  except KeyboardInterrupt:
-    ws.close()
+socketIO = SocketIO('10.0.1.194', 8880)
+socketIO.on('openbci', on_sample)
+socketIO.wait(seconds=1)
