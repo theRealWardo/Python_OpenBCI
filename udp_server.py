@@ -7,16 +7,43 @@ Requires:
   - websockets
 """
 
+import argparse
 import cPickle as pickle
+import json
 import open_bci
 import socket
 
 
+parser = argparse.ArgumentParser(
+    description='Run a UDP server streaming OpenBCI data.')
+parser.add_argument(
+    '--json',
+    action='store_true',
+    help='Send JSON data rather than pickled Python objects.')
+parser.add_argument(
+    '--host',
+    help='The host to listen on.',
+    default='127.0.0.1')
+parser.add_argument(
+    '--port',
+    help='The port to listen on.',
+    default='8888')
+parser.add_argument(
+    '--serial',
+    help='The serial port to communicate with the OpenBCI board.',
+    default='/dev/tty.usbmodem1411')
+parser.add_argument(
+    '--baud',
+    help='The baud of the serial connection with the OpenBCI board.',
+    default='115200')
+
+
 class UDPServer(object):
 
-  def __init__(self, ip, port):
+  def __init__(self, ip, port, json):
     self.ip = ip
     self.port = port
+    self.json = json
     self.server = socket.socket(
         socket.AF_INET, # Internet
         socket.SOCK_DGRAM)
@@ -25,9 +52,15 @@ class UDPServer(object):
     self.server.sendto(data, (self.ip, self.port))
 
   def handle_sample(self, sample):
-    self.send_data(pickle.dumps(sample))
+    if self.json:
+      # Just send channel data.
+      self.send_data(json.dumps(sample.channels))
+    else:
+      # Pack up and send the whole OpenBCISample object.
+      self.send_data(pickle.dumps(sample))
 
 
-obci = open_bci.OpenBCIBoard('/dev/tty.usbmodem1411', 115200)
-sock_server = UDPServer('127.0.0.1', 8888)
+args = parser.parse_args()
+obci = open_bci.OpenBCIBoard(args.serial, int(args.baud))
+sock_server = UDPServer(args.host, int(args.port), args.json)
 obci.start_streaming(sock_server.handle_sample)

@@ -51,7 +51,7 @@ class OpenBCISample(object):
     parts = data.rstrip().split(', ')
     self.id = parts[0]
     self.channels = []
-    for c in xrange(1, len(parts) - 2):
+    for c in xrange(1, len(parts) - 1):
       self.channels.append(int(parts[c]))
     # This is fucking bullshit but I have to strip the comma from the last
     # sample because the board is returning a comma... wat?
