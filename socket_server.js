@@ -3,11 +3,10 @@ var events = require('events');
 var fs = require('fs');
 var http = require('http');
 var io = require('socket.io');
-var static = require('node-static');
 
 var UDP_HOST = '127.0.0.1',
     UDP_PORT = 8888,
-    SERVER_HOST = '127.0.0.1',
+    SERVER_HOST = '10.0.1.194',
     SERVER_PORT = 8880,
     HTDOCS_PATH = '/htdocs';
 
