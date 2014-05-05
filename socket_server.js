@@ -6,7 +6,7 @@ var io = require('socket.io');
 
 var UDP_HOST = '127.0.0.1',
     UDP_PORT = 8888,
-    SERVER_HOST = '10.0.1.194',
+    SERVER_HOST = '127.0.0.1',
     SERVER_PORT = 8880,
     HTDOCS_PATH = '/htdocs';
 

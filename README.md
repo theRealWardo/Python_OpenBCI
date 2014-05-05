@@ -14,11 +14,12 @@ Running the Server
 - Plugin the board
 - `python udp_server.py --json`
 - Optionally use `python udp_client.py --json` to verify data is coming through
-- Make sure you have socket.io (or run `npm install socket.io`)
+- Run `npm install` to make sure you have the dependencies
 - Run `node socket_server.js`
-- Visit [http://localhost:8880](http://localhost:8880) to see your brain waves
+- Visit [http://127.0.0.1:8880](http://127.0.0.1:8880) to see your brain waves
 - Optionally use `python socket_client.py` to view the Web Socket data coming back into Python (requires socketio-client)
 
+Running the Python server/client without the --json flag will cause the OpenBCISample object to be used as the data transmission mechanism. This is for people that want to do some processing in Python.
 
 Dependency List
 --------------
