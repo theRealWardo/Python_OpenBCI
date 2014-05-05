@@ -7,3 +7,5 @@ Python samples require:
 
 Node sample requires:
 - socket.io
+
+![alt tag](https://raw.github.com/theRealWardo/Python_OpenBCI/master/architecture.png)
