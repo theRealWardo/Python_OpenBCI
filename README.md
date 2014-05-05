@@ -12,7 +12,7 @@ Running the Server
 --------------
 
 - Plugin the board
-- `python udp_server.py --json`
+- `python udp_server.py --json` (add the `--filter_data` command to enable the band-stop filter on the board)
 - Optionally use `python udp_client.py --json` to verify data is coming through
 - Run `npm install` to make sure you have the dependencies
 - Run `node socket_server.js`

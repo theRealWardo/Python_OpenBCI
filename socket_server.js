@@ -66,7 +66,11 @@ OpenBCIServer.prototype.onRequest = function(req, res) {
 };
 
 OpenBCIServer.prototype.serveStatic = function(req, res) {
-  fs.readFile(__dirname + this.htdocs + req.url,
+  var file = req.url;
+  if (file == '/') {
+    file = '/index.html';
+  }
+  fs.readFile(__dirname + this.htdocs + file,
       function(err, data) {
         if (err) {
           console.log(err);
