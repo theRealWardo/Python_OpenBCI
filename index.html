@@ -99,6 +99,7 @@ var process = 1;
 
 var socket = io.connect('http://127.0.0.1');
 socket.on('openbci', function (sample) {
+  // Only looking at every 1/3rd data point to reduce load.
   if (process % 3 == 0) {
     for (var i = 0; i < 8; i++) {
       waves[i].sample(sample[i])
