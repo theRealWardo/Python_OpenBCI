@@ -97,7 +97,7 @@ for (var i = 0; i < 8; i++) {
 
 var process = 1;
 
-var socket = io.connect('http://10.0.1.194');
+var socket = io.connect('http://127.0.0.1');
 socket.on('openbci', function (sample) {
   if (process % 3 == 0) {
     for (var i = 0; i < 8; i++) {
